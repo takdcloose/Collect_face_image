@@ -9,12 +9,12 @@ import time
 from googlesearch import search
 from bs4 import BeautifulSoup
 import re
-import tqdm
 from face_recognize import face_detect,face_recog
 from glob import glob
+import tqdm
 
-downloadDirectory = "./Download/img/"
-name = "Scarlett Johansson image"
+downloadDirectory = "./Download/img5/"
+name = "Chris Evans image"
 num = 1
 threshold = 2
 
@@ -30,7 +30,7 @@ def getAbsoluteURL(baseUrl, source):
         url = 'http://{}'.format(source)
     else:
         url = '{}/{}'.format(baseUrl, source)
-    if not re.match(".*\.(jpg|png|bmp)",url):
+    if not re.match(".*\.(jpg|png)",url):
         return None
     return url
 
@@ -67,15 +67,7 @@ def DownloadImage(externalLinks):
         try:
             html = urlopen(req).read()
         except HTTPError as err:
-            if err.code == 404:
-                print("Page was not found")
-                return None
-            elif err.code == 403:
-                time.sleep(2)
-                print("bad behavior")
-                return None
-            else:
-                raise
+            return None
         bs = BeautifulSoup(html, 'html.parser')
         #get path of image
         downloadList = bs.find_all('img')
@@ -99,16 +91,23 @@ def DownloadImage(externalLinks):
                     for i in result:
                         true_num += i*1
                     if true_num >= threshold:
-                        cv2.imwrite(downloadDirectory+str(num)+".jpg", face)
-                        num += 1
+                        try:
+                            if ".png" in fileUrl:
+                                cv2.imwrite(downloadDirectory+str(num)+".png", face)
+                            else:
+                                cv2.imwrite(downloadDirectory+str(num)+".jpg", face)
+                            num += 1
+                        except:
+                            print("Fail to save")
             time.sleep(1)
     return None
 
 #for page in range(1,15):
 if __name__ == "__main__":
 
-    externalLinks = getExternalLinks(1)
-    DownloadImage(externalLinks)
+    for page in range(1,15):
+        externalLinks = getExternalLinks(page)
+        DownloadImage(externalLinks)
 
     print("Complete to download")
     print("Delete the same image...")
