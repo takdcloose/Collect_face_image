@@ -7,6 +7,7 @@ sample_image/1.jpg
 sample_image/2.jpg
 sample_image/3.jpg
 sample_image/4.jpg
+sample_image/chris*.jpg
 sample_image/705.jpg
 Download/img/*.jpg
 !Download/img/1.jpg

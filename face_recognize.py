@@ -11,14 +11,8 @@ def url_to_image(url):
     req = Request(url, headers=header)
     try:
         resp = urlopen(req)
-    except HTTPError as err:
-        if err.code == 404:
-            return None
-        elif err.code == 403:
-            time.sleep(2)
-            return None
-        else:
-            raise
+    except:
+        return None
     image = np.asarray(bytearray(resp.read()), dtype="uint8")
     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
     return image
@@ -48,11 +42,11 @@ def face_recog(face):
     #Output: whether it's target or not
 
     #load some images that contain target's face
-    sample_image = face_recognition.load_image_file("sample_image/Scarlett_Johansson_1761.jpg")
-    sample_image1 = face_recognition.load_image_file("sample_image/Scarlett_Johansson_1814.jpg")
-    sample_image2 = face_recognition.load_image_file("sample_image/Scarlett_Johansson_1859.jpg")
-    sample_image3 = face_recognition.load_image_file("sample_image/Scarlett_Johansson_1868.jpg")
-    sample_image4 = face_recognition.load_image_file("sample_image/Scarlett_Johansson_1836.jpg")
+    sample_image = face_recognition.load_image_file("sample_image/<image file>")
+    sample_image1 = face_recognition.load_image_file("sample_image/<image file>")
+    sample_image2 = face_recognition.load_image_file("sample_image/<image file>")
+    sample_image3 = face_recognition.load_image_file("sample_image/<image file>")
+    sample_image4 = face_recognition.load_image_file("sample_image/<image file>")
 
     sample_image = face_recognition.face_encodings(sample_image)[0]
     sample_image1 = face_recognition.face_encodings(sample_image1)[0]
