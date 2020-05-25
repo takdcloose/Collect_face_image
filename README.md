@@ -18,5 +18,3 @@ opencv-python==4.2.0.34
 5. excute it and wait a long time...
 6. check /Download/img folder 
 
-
-see the detail of this code in [my blog]()
